@@ -1,0 +1,6 @@
+numpy
+h5py
+xmltodict
+dill
+scipy
+sklearn

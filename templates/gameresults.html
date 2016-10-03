@@ -1,0 +1,312 @@
+<!doctype html>
+<html>
+<head>
+<style>
+.link {
+  stroke: #ccc;
+}
+
+.node {
+    stroke: #fff;
+    stroke-width: 1.5px;
+}
+.node text {
+  pointer-events: none;
+  font: 10px sans-serif;
+  stroke: #000;
+  stroke-width: 0px;
+}
+</style>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+	
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+
+<script src="https://d3js.org/d3.v3.min.js"></script>
+	</head>
+	
+<title>Game Time!</title>
+<!-- <link rel=stylesheet type=text/css href='{{ url_for('static',filename='style.css')}}'> -->
+<div class=container>
+
+
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/static/landing.html">Game Time</a>
+          </div>
+          
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li><a href="/static/about.html">About</a></li>
+              <li><a href="/user">Game Recommendations</a></li>
+              <li class="active"><a href="/game">Game Prediction</a></li>
+            </ul>
+</nav>
+
+  <h1>A Hypothetical Game</h1>
+  <div class=metanav>
+
+    <h4>
+	Your game might score {{score}} from BoardGameGeek users (better than {{percentile}} of games). The graph below shows the games most similar to yours and the five most similar to those. The black node is your hypothetical game. The score is found using a boosted decision tree using a game's properties, themes, and mechanics as features. 
+    </h4>
+    
+    
+<script type="application/json" id="mis">
+{{game_json|safe}}
+</script>
+	
+
+<row>
+<div class="plot text-center col-md-6"></div>
+<script type="text/javascript">
+//Constants for the SVG
+var width = 600,
+    height = 500;
+
+//Set up the colour scale
+var color = d3.scale.category20();
+
+//Set up the force layout
+var force = d3.layout.force()
+    .charge(-200)
+    .linkDistance(100)
+    .size([width, height]);
+
+//Append a SVG to the body of the html page. Assign this SVG as an object to svg
+var svg = d3.select(".plot").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+//Read the data from the mis element 
+var mis = document.getElementById('mis').innerHTML;
+graph = JSON.parse(mis);
+
+//Creates the graph data structure out of the json data
+force.nodes(graph.nodes)
+    .links(graph.links)
+    .start();
+
+//Create all the line svgs but without locations yet
+var link = svg.selectAll(".link")
+    .data(graph.links)
+    .enter().append("line")
+    .attr("class", "link")
+    .style("stroke-width", function (d) {
+    return Math.exp(d.weight/2);
+});
+
+//Do the same with the circles for the nodes - no 
+//Changed
+var node = svg.selectAll(".node")
+    .data(graph.nodes)
+    .enter().append("g")
+    .attr("class", "node")
+    .call(force.drag);
+
+//d.weight
+node.append("circle")
+    .attr("r", function(d) {if (d.group) return 4 * d.group+2; return 4})
+    .style("fill", function (d) { if (d.id != 'A Hypothetical Game')
+    return color(d.id); return '#000';
+}).on('dblclick', connectedNodes);
+
+node.append("text")
+      .attr("dx", 10)
+      .attr("dy", ".35em")
+      .text(function(d) { return d.id });
+//End changed
+
+
+//Now we are giving the SVGs co-ordinates - the force layout is generating the co-ordinates which this code is using to update the attributes of the SVG elements
+force.on("tick", function () {
+    link.attr("x1", function (d) {
+        return d.source.x;
+    })
+        .attr("y1", function (d) {
+        return d.source.y;
+    })
+        .attr("x2", function (d) {
+        return d.target.x;
+    })
+        .attr("y2", function (d) {
+        return d.target.y;
+    });
+
+    //Changed
+    
+    d3.selectAll("circle").attr("cx", function (d) {
+        return d.x;
+    })
+        .attr("cy", function (d) {
+        return d.y;
+    });
+
+    d3.selectAll("text").attr("x", function (d) {
+        return d.x;
+    })
+        .attr("y", function (d) {
+        return d.y;
+    });
+    
+    //End Changed
+
+});
+
+//---Insert-------
+
+//Toggle stores whether the highlighting is on
+var toggle = 0;
+
+//Create an array logging what is connected to what
+var linkedByIndex = {};
+for (i = 0; i < graph.nodes.length; i++) {
+    linkedByIndex[i + "," + i] = 1;
+};
+graph.links.forEach(function (d) {
+    linkedByIndex[d.source.index + "," + d.target.index] = 1;
+});
+
+//This function looks up whether a pair are neighbours  
+function neighboring(a, b) {
+    return linkedByIndex[a.index + "," + b.index];
+}
+
+function connectedNodes() {
+
+    if (toggle == 0) {
+        //Reduce the opacity of all but the neighbouring nodes
+        d = d3.select(this).node().__data__;
+        node.style("opacity", function (o) {
+            return neighboring(d, o) | neighboring(o, d) ? 1 : 0.1;
+        });
+        
+        link.style("opacity", function (o) {
+            return d.index==o.source.index | d.index==o.target.index ? 1 : 0.1;
+        });
+        
+        //Reduce the op
+        
+        toggle = 1;
+    } else {
+        //Put them back to opacity=1
+        node.style("opacity", 1);
+        link.style("opacity", 1);
+        toggle = 0;
+    }
+
+}
+</script>
+<div class = "col-md-1"></div>
+
+<div class = "col-md-5">
+<h4> Click for descriptions of the most similar games </h4>
+<h5>
+<ol>
+<li> <div class="accordion" id="accordion2">
+  
+   <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne" >
+		{{games[0]}}
+      </a>
+    </div>
+    <div id="collapseOne" class="accordion-body collapse">
+    
+       <h5> <p>{{game_text[0]| safe}}</p> <p> <a href="https://www.boardgamegeek.com/boardgame/{{nums[0]}}" target="_blank">More information on BoardgameGeek</a></h5>
+      </div>
+    
+    <!-- <button class="SeeMore2" data-toggle="collapse" href="#collapseTwo">See More</button> -->
+  </div>
+
+</div>
+
+<li> <div class="accordion" id="accordion2">
+  
+   <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo" >
+		{{games[1]}}
+      </a>
+    </div>
+    <div id="collapseTwo" class="accordion-body collapse">
+    
+       <h5> <p>{{game_text[1]| safe}}</p> <p> <a href="https://www.boardgamegeek.com/boardgame/{{nums[1]}}" target="_blank">More information on BoardgameGeek</a></h5>
+      </div>
+    
+    <!-- <button class="SeeMore2" data-toggle="collapse" href="#collapseTwo">See More</button> -->
+  </div>
+
+</div>
+<li> <div class="accordion" id="accordion2">
+  
+   <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree" >
+		{{games[2]}}
+      </a>
+    </div>
+    <div id="collapseThree" class="accordion-body collapse">
+    
+       <h5> <p>{{game_text[2]| safe}}</p> <p> <a href="https://www.boardgamegeek.com/boardgame/{{nums[2]}}" target="_blank">More information on BoardgameGeek</a></h5>
+      </div>
+    
+    <!-- <button class="SeeMore2" data-toggle="collapse" href="#collapseTwo">See More</button> -->
+  </div>
+
+</div>
+<li> <div class="accordion" id="accordion2">
+  
+   <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour" >
+		{{games[3]}}
+      </a>
+    </div>
+    <div id="collapseFour" class="accordion-body collapse">
+    
+       <h5> <p>{{game_text[3]| safe}}</p> <p> <a href="https://www.boardgamegeek.com/boardgame/{{nums[3]}}" target="_blank">More information on BoardgameGeek</a></h5>
+      </div>
+    
+    <!-- <button class="SeeMore2" data-toggle="collapse" href="#collapseTwo">See More</button> -->
+  </div>
+
+</div>
+<li> <div class="accordion" id="accordion2">
+  
+   <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFive" >
+		{{games[4]}}
+      </a>
+    </div>
+    <div id="collapseFive" class="accordion-body collapse">
+    
+       <h5> <p>{{game_text[4]| safe}}</p> <p> <a href="https://www.boardgamegeek.com/boardgame/{{nums[4]}}" target="_blank">More information on BoardgameGeek</a></h5>
+      </div>
+    
+    <!-- <button class="SeeMore2" data-toggle="collapse" href="#collapseTwo">See More</button> -->
+  </div>
+
+</div>
+</ol>
+</h5></div>
+
+</row>
+
+</div>
+
+
+</div>
+</html>

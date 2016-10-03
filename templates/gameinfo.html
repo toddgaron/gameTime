@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+<head>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+	
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	</head>
+<script type="text/javascript">
+
+		var themes = [{id:0,text:"World War I"},{id:1,text:"City Building"},{id:2,text:"Ancient"},{id:3,text:"Humor"},{id:4,text:"Science Fiction"},{id:5,text:"Game System"},{id:6,text:"Vietnam War"},{id:7,text:"Abstract Strategy"},{id:8,text:"Travel"},{id:9,text:"Political"},{id:10,text:"Educational"},{id:11,text:"Sports"},{id:12,text:"Civilization"},{id:13,text:"Music"},{id:14,text:"Bluffing"},{id:15,text:"American West"},{id:16,text:"Memory"},{id:17,text:"Party Game"},{id:18,text:"Maze"},{id:19,text:"Farming"},{id:20,text:"Racing"},{id:21,text:"Math"},{id:22,text:"Dice"},{id:23,text:"Children\'s Game"},{id:24,text:"American Civil War"},{id:25,text:"Transportation"},{id:26,text:"Medieval"},{id:27,text:"Miniatures"},{id:28,text:"Space Exploration"},{id:29,text:"Horror"},{id:30,text:"Pike and Shot"},{id:31,text:"Comic Book / Strip"},{id:32,text:"Wargame"},{id:33,text:"Trivia"},{id:34,text:"Card Game"},{id:35,text:"Movies / TV / Radio theme"},{id:36,text:"Action / Dexterity"},{id:37,text:"Adventure"},{id:38,text:"Real-time"},{id:39,text:"Expansion for Base-game"},{id:40,text:"Collectible Components"},{id:41,text:"Aviation / Flight"},{id:42,text:"Novel-based"},{id:43,text:"Territory Building"},{id:44,text:"Book"},{id:45,text:"Prehistoric"},{id:46,text:"Animals"},{id:47,text:"Modern Warfare"},{id:48,text:"Print & Play"},{id:49,text:"Napoleonic"},{id:50,text:"Murder/Mystery"},{id:51,text:"Medical"},{id:52,text:"Fighting"},{id:53,text:"Industry / Manufacturing"},{id:54,text:"Deduction"},{id:55,text:"American Revolutionary War"},{id:56,text:"Exploration"},{id:57,text:"Zombies"},{id:58,text:"Trains"},{id:59,text:"Renaissance"},{id:60,text:"Post-Napoleonic"},{id:61,text:"Mythology"},{id:62,text:"Environmental"},{id:63,text:"Word Game"},{id:64,text:"Negotiation"},{id:65,text:"American Indian Wars"},{id:66,text:"Mature / Adult"},{id:67,text:"World War II"},{id:68,text:"Pirates"},{id:69,text:"Religious"},{id:70,text:"Puzzle"},{id:71,text:"Number"},{id:72,text:"Civil War"},{id:73,text:"Age of Reason"},{id:74,text:"Arabian"},{id:75,text:"Fantasy"},{id:76,text:"Spies/Secret Agents"},{id:77,text:"Economic"},{id:78,text:"Nautical"},{id:79,text:"Korean War"},{id:80,text:"Mafia"},{id:81,text:"Electronic"},{id:82,text:"Video Game Theme"}];
+		
+		var mechanics =[{id:0,text:"Card Drafting"},{id:1,text:"Hand Management"},{id:2,text:"Grid Movement"},{id:3,text:"Memory"},{id:4,text:"Line Drawing"},{id:5,text:"Acting"},{id:6,text:"Time Track"},{id:7,text:"Rock-Paper-Scissors"},{id:8,text:"Modular Board"},{id:9,text:"Worker Placement"},{id:10,text:"Simultaneous Action Selection"},{id:11,text:"Chit-Pull System"},{id:12,text:"Hex-and-Counter"},{id:13,text:"Action Point Allowance System"},{id:14,text:"Pattern Recognition"},{id:15,text:"Action / Movement Programming"},{id:16,text:"Set Collection"},{id:17,text:"Co-operative Play"},{id:18,text:"Paper-and-Pencil"},{id:19,text:"Secret Unit Deployment"},{id:20,text:"Area Control / Area Influence"},{id:21,text:"Roll / Spin and Move"},{id:22,text:"Player Elimination"},{id:23,text:"Take That"},{id:24,text:"Stock Holding"},{id:25,text:"Crayon Rail System"},{id:26,text:"Role Playing"},{id:27,text:"Point to Point Movement"},{id:28,text:"Press Your Luck"},{id:29,text:"Pick-up and Deliver"},{id:30,text:"Trick-taking"},{id:31,text:"Simulation"},{id:32,text:"Pattern Building"},{id:33,text:"Variable Phase Order"},{id:34,text:"Voting"},{id:35,text:"Area Enclosure"},{id:36,text:"Dice Rolling"},{id:37,text:"Partnerships"},{id:38,text:"Route/Network Building"},{id:39,text:"Storytelling"},{id:40,text:"Singing"},{id:41,text:"Deck / Pool Building"},{id:42,text:"Area-Impulse"},{id:43,text:"Commodity Speculation"},{id:44,text:"Trading"},{id:45,text:"Tile Placement"},{id:46,text:"Campaign / Battle Card Driven"},{id:47,text:"Betting/Wagering"},{id:48,text:"Area Movement"},{id:49,text:"Auction/Bidding"},{id:50,text:"Variable Player Powers"}];
+		
+$(document).ready(function() {
+
+  
+    $(".js-example-theme").select2({
+  data : themes,
+  multiple : true,
+  });
+  
+      $(".js-example-mechanic").select2({
+  data : mechanics,
+  multiple : true,
+  });
+  
+  
+});
+	
+</script>
+	</head>
+	
+<title>Game Time!</title>
+<!-- <link rel=stylesheet type=text/css href='{{ url_for('static',filename='style.css')}}'> -->
+<div class=container>
+<!-- <link rel=stylesheet type=text/css href='{{ url_for('static',filename='style.css')}}'> -->
+
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/static/landing.html">Game Time</a>
+          </div>
+          
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li><a href="/static/about.html">About</a></li>
+              <li><a href="/user">Game Recommendations</a></li>
+              <li class="active"><a href="/game">Game Prediction</a></li>
+            </ul>
+</nav>
+
+  <h1>A Hypothetical Game</h1>
+  <div class=metanav>
+
+ <div  class="row"><div class = "col-md-6">
+ 
+    <h4>
+	Fill in as many properties of your potential game as you want and get the predicted rating and similar games.
+    </h4>
+
+    <form id='gameform' method='post' action='game' >
+    
+
+     <div class ="row">
+     	<div class="col-md-7">
+     Minimum Number of Players </div> <div class="col-md-4"> <input name="minplayers" placeholder='2'> </input> </div>
+     </div>
+      <div class ="row">
+     	<div class="col-md-7">
+     Maximum Number of Players </div> <div class="col-md-4"> <input name="maxplayers" placeholder='4'> </input> </div>
+     </div>
+      <div class ="row">
+     	<div class="col-md-7">
+     Average Playtime (hours) </div> <div class="col-md-4"> <input name="avgplaytime" placeholder='2'> </input> </div>
+     </div>
+       <div class ="row">
+     	<div class="col-md-7">
+     Language/Game Complexity (1-5 easy to complex) </div> <div class="col-md-4"> <input name="langcomplexity" placeholder='1'> </input> </div>
+     </div>
+       <div class ="row">
+     	<div class="col-md-7">
+     Recommended Player Age (4-16 child to adult) </div> <div class="col-md-4"> <input name="playerage" placeholder='8'> </input> </div>
+     </div>
+       <div class ="row">
+     	<div class="col-md-7">
+     Game Theme </div> <div class="col-md-5"> <select class="js-example-theme" name="theme"> </select> </div>
+     </div>
+       <div class ="row">
+     	<div class="col-md-7">
+     Game Mechanics </div> <div class="col-md-5"> <select class="js-example-mechanic" name="mechanics"> </select></div>
+     </div>
+
+      <p>
+    <input type='submit' value='Submit' />
+      </p>
+      </div>
+      <div class = "col-md-6">
+      <h4>
+      <p>
+      The hypothetical BoardGameGeek score is found using a cross validated boosted decision tree. Boosting takes a series of weak learners and glues them together to create a stronger model. We use the algorithm AdaBoost because it is relatively quick to train and only keeps the most important features.
+      </p>
+      <p> Once we have a games score we calculate the similarity of that game with every other game in the dataset and output those games and then the games most similar to those games as you'll see on the next page.
+      </p>
+      </h4>
+      </div>
+      
+      </div>
+      
+      
+      
+    </form>
+
+  </div>
+
+
+</div>
+</html>

@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+	
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	</head>
+<script type="text/javascript">
+var numberRatings= [{id: 0, text: "None"},{id: 10, text: "10"},{id: 9, text: "9"},{id: 8, text: "8"},{id: 7, text: "7"},{id: 6, text: "6"},{id: 5, text: "5"},{id: 4, text: "4"},{id: 3, text: "3"},{id: 2, text: "2"} ,{id: 1, text: "1"}];
+
+var gameNumbers=[{id:-1,text:"None"},{id:115,text:"6 nimmt!"},{id:785,text:"7 Wonders"},{id:1161,text:"7 Wonders: Duel"},{id:359,text:"A Game of Thrones (first edition)"},{id:878,text:"A Game of Thrones: The Board Game (Second Edition)"},{id:679,text:"A Game of Thrones: The Card Game"},{id:2,text:"Acquire"},{id:607,text:"Agricola"},{id:924,text:"Agricola:  All Creatures Big and Small"},{id:1123,text:"Alchemists"},{id:355,text:"Alhambra"},{id:725,text:"Alien Frontiers"},{id:945,text:"Android: Netrunner"},{id:30,text:"Apples to Apples"},{id:454,text:"Arkham Horror"},{id:789,text:"Ascension: Deckbuilding Game"},{id:36,text:"Axis & Allies"},{id:275,text:"Backgammon"},{id:319,text:"BANG!"},{id:1024,text:"BANG! The Dice Game"},{id:159,text:"Battle Line"},{id:550,text:"BattleLore"},{id:650,text:"Battlestar Galactica"},{id:404,text:"Betrayal at House on the Hill"},{id:631,text:"Biblios"},{id:281,text:"Blokus"},{id:832,text:"Blood Bowl: Team Manager \xe2\x80\x93 The Card Game"},{id:6,text:"Bohnanza"},{id:956,text:"Bora Bora"},{id:977,text:"Boss Monster: The Dungeon Building Card Game"},{id:582,text:"Brass"},{id:1082,text:"Ca$h \'n Guns (second edition)"},{id:1074,text:"Camel Up"},{id:165,text:"Carcassonne"},{id:331,text:"Carcassonne: Hunters and Gatherers"},{id:367,text:"Carcassonne: The Castle"},{id:726,text:"Cards Against Humanity"},{id:712,text:"Castle Panic"},{id:1083,text:"Castles of Mad King Ludwig"},{id:8,text:"Catan"},{id:96,text:"Catan Card Game"},{id:877,text:"Caverna: The Cave Farmers"},{id:482,text:"Caylus"},{id:711,text:"Chaos in the Old World"},{id:62,text:"Chess"},{id:123,text:"Citadels"},{id:213,text:"Clue"},{id:1176,text:"Codenames"},{id:350,text:"Coloretto"},{id:1110,text:"Colt Express"},{id:438,text:"Commands & Colors: Ancients"},{id:1049,text:"Concept"},{id:674,text:"Cosmic Encounter"},{id:974,text:"Coup"},{id:174,text:"Cranium"},{id:736,text:"Cyclades"},{id:1061,text:"Dead of Winter: A Crossroads Game"},{id:471,text:"Descent: Journeys in the Dark"},{id:882,text:"Descent: Journeys in the Dark (Second Edition)"},{id:125,text:"Diplomacy"},{id:677,text:"Dixit"},{id:847,text:"Dixit Odyssey"},{id:755,text:"Dominant Species"},{id:642,text:"Dominion"},{id:691,text:"Dominion: Intrigue"},{id:718,text:"Dungeon Lords"},{id:859,text:"Dungeon Petz"},{id:1000,text:"Dungeon Roll"},{id:749,text:"Dungeons & Dragons: Castle Ravenloft Board Game"},{id:800,text:"Eclipse"},{id:34,text:"El Grande"},{id:869,text:"Elder Sign"},{id:1039,text:"Eldritch Horror"},{id:784,text:"Eminent Domain"},{id:907,text:"Escape: The Curse of the Temple"},{id:436,text:"Fairy Tale"},{id:997,text:"Firefly: The Game"},{id:1099,text:"Five Tribes"},{id:870,text:"Flash Point: Fire Rescue"},{id:94,text:"Fluxx"},{id:63,text:"For Sale"},{id:988,text:"Forbidden Desert"},{id:764,text:"Forbidden Island"},{id:658,text:"Formula D"},{id:774,text:"Fresco"},{id:714,text:"Friday"},{id:508,text:"Fury of Dracula (second edition)"},{id:608,text:"Galaxy Trucker"},{id:649,text:"Ghost Stories"},{id:423,text:"Gloom"},{id:498,text:"Glory to Rome"},{id:68,text:"Go"},{id:391,text:"Goa"},{id:43,text:"Guillotine"},{id:866,text:"Hanabi"},{id:152,text:"HeroQuest"},{id:410,text:"Heroscape Master Set: Rise of the Valkyrie"},{id:381,text:"Hey, That\'s My Fish!"},{id:292,text:"Hive"},{id:1075,text:"Imperial Settlers"},{id:657,text:"Incan Gold"},{id:398,text:"Ingenious"},{id:763,text:"Innovation"},{id:1057,text:"Istanbul"},{id:732,text:"Jaipur"},{id:577,text:"Jamaica"},{id:415,text:"Jambo"},{id:280,text:"Jenga"},{id:374,text:"Jungle Speed"},{id:954,text:"Kemet"},{id:936,text:"Keyflower"},{id:1117,text:"King of New York"},{id:791,text:"King of Tokyo"},{id:891,text:"Kingdom Builder"},{id:564,text:"Kingsburg"},{id:201,text:"Labyrinth"},{id:587,text:"Last Night on Earth: The Zombie Game"},{id:639,text:"Le Havre"},{id:967,text:"Legendary: A Marvel Deck Building Game"},{id:957,text:"Legends of Andor"},{id:750,text:"Letters from Whitechapel"},{id:1007,text:"Lewis & Clark"},{id:17,text:"Liar\'s Dice"},{id:948,text:"Libertalia"},{id:166,text:"Lord of the Rings"},{id:899,text:"Lords of Waterdeep"},{id:21,text:"Lost Cities"},{id:968,text:"Love Letter"},{id:1025,text:"Machi Koro"},{id:857,text:"Mage Knight Board Game"},{id:871,text:"Mage Wars Arena"},{id:119,text:"Magic: The Gathering"},{id:822,text:"Mansions of Madness"},{id:1055,text:"Marvel Dice Masters: Avengers vs. X-Men"},{id:405,text:"Memoir \'44"},{id:549,text:"Merchants & Marauders"},{id:944,text:"Mice and Mystics"},{id:143,text:"Mille Bornes"},{id:44,text:"Modern Art"},{id:224,text:"Monopoly"},{id:684,text:"Monopoly Deal Card Game"},{id:516,text:"Mr. Jack"},{id:252,text:"Munchkin"},{id:1180,text:"Mysterium"},{id:510,text:"Neuroshima Hex!"},{id:445,text:"Nexus Ops"},{id:427,text:"No Thanks!"},{id:551,text:"Notre Dame"},{id:203,text:"Once Upon a Time: The Storytelling Card Game"},{id:1052,text:"One Night Ultimate Werewolf"},{id:790,text:"Ora et Labora"},{id:599,text:"Pandemic"},{id:1122,text:"Pandemic Legacy: Season 1"},{id:1128,text:"Patchwork"},{id:980,text:"Pathfinder Adventure Card Game: Rise of the Runelords \xe2\x80\x93 Base Set"},{id:302,text:"Pirate\'s Cove"},{id:53,text:"Pit"},{id:290,text:"Power Grid"},{id:303,text:"Puerto Rico"},{id:839,text:"Quarriors!"},{id:555,text:"Qwirkle"},{id:7,text:"Ra"},{id:579,text:"Race for the Galaxy"},{id:468,text:"Railways of the World"},{id:648,text:"Red November"},{id:67,text:"Risk"},{id:246,text:"Risk 2210 A.D."},{id:932,text:"Robinson Crusoe: Adventures on the Cursed Island"},{id:10,text:"Robo Rally"},{id:979,text:"Roll for the Galaxy"},{id:654,text:"Roll Through the Ages: The Bronze Age"},{id:162,text:"Rummikub"},{id:513,text:"Runebound (Second Edition)"},{id:393,text:"Saboteur"},{id:392,text:"Saint Petersburg"},{id:1,text:"Samurai"},{id:383,text:"San Juan"},{id:269,text:"Scattergories"},{id:117,text:"Scotland Yard"},{id:99,text:"Scrabble"},{id:894,text:"Seasons"},{id:875,text:"Sentinels of the Multiverse"},{id:200,text:"SET"},{id:442,text:"Shadows over Camelot"},{id:1104,text:"Sheriff of Nottingham"},{id:284,text:"Sherlock Holmes Consulting Detective"},{id:506,text:"Shogun"},{id:811,text:"Sid Meier\'s Civilization: The Board Game"},{id:687,text:"Small World"},{id:860,text:"Small World Underground"},{id:937,text:"Smash Up"},{id:985,text:"Smash Up: Awesome Level 9000"},{id:664,text:"Space Alert"},{id:796,text:"Space Hulk: Death Angel \xe2\x80\x93 The Card Game"},{id:1053,text:"Splendor"},{id:1137,text:"Spyfall"},{id:1048,text:"Star Realms"},{id:1134,text:"Star Wars: Imperial Assault"},{id:879,text:"Star Wars: X-Wing Miniatures Game"},{id:574,text:"Steam"},{id:635,text:"Stone Age"},{id:250,text:"Stratego"},{id:940,text:"Suburbia"},{id:848,text:"Summoner Wars: Master Set"},{id:291,text:"Survive: Escape from Atlantis!"},{id:981,text:"Sushi Go!"},{id:194,text:"Taboo"},{id:793,text:"Takenoko"},{id:628,text:"Tales of the Arabian Nights"},{id:570,text:"Talisman (Revised 4th Edition)"},{id:927,text:"Terra Mystica"},{id:862,text:"Terror in Meeple City"},{id:825,text:"The Castles of Burgundy"},{id:298,text:"The Game of Life"},{id:812,text:"The Lord of the Rings: The Card Game"},{id:539,text:"The Pillars of the Earth"},{id:139,text:"The Princes of Florence"},{id:696,text:"The Resistance"},{id:964,text:"The Resistance: Avalon"},{id:558,text:"The Werewolves of Miller\'s Hollow"},{id:553,text:"Through the Ages: A Story of Civilization"},{id:129,text:"Through the Desert"},{id:731,text:"Thunderstone"},{id:517,text:"Thurn and Taxis"},{id:74,text:"Tichu"},{id:390,text:"Ticket to Ride"},{id:440,text:"Ticket to Ride: Europe"},{id:511,text:"Ticket to Ride: M\xc3\xa4rklin"},{id:614,text:"Ticket to Ride: Nordic Countries"},{id:16,text:"Tigris & Euphrates"},{id:23,text:"Tikal"},{id:703,text:"Tobago"},{id:941,text:"Tokaido"},{id:32,text:"Torres"},{id:876,text:"Trajan"},{id:806,text:"Troyes"},{id:465,text:"Tsuro"},{id:421,text:"Twilight Imperium (Third Edition)"},{id:419,text:"Twilight Struggle"},{id:952,text:"Tzolk\'in: The Mayan Calendar"},{id:262,text:"UNO"},{id:881,text:"Village"},{id:396,text:"War of the Ring (first edition)"},{id:502,text:"Wits & Wagers"},{id:264,text:"Yahtzee"},{id:909,text:"Zombicide"},{id:759,text:"Zombie Dice"},{id:588,text:"Zombie Fluxx"},{id:282,text:"Zombies!!!"},{id:569,text:"Zooloretto"}]
+
+var ratingMethod=[{id:0,text:"hybrid"},{id:1,text:"user-user"},{id:2,text:"item-item"},{id:3,text:"game-game"}]
+
+$(document).ready(function() {
+  $(".js-example-basic-single").select2({
+  data : gameNumbers,
+  });
+  
+    $(".js-example-methods").select2({
+  data : ratingMethod,
+  });
+  
+  $(".js-example-numbers").select2({
+  placeholder: "-",
+  data : numberRatings,
+  width: '50%',
+  });
+  
+  $("#rowButton").click(function(){
+   $tr=$("tbody").append( "<tr><td> Game: <select class=\"js-example-basic-single\" name=\'game[]\'></select></td><td>Rating: <select class=\"js-example-numbers\" name=\'rating[]\'></select></td></tr><tr><td> Game: <select class=\"js-example-basic-single\" name=\'game[]\'></select></td><td>Rating: <select class=\"js-example-numbers\" name=\'rating[]\'></select></td></tr><tr><td> Game: <select class=\"js-example-basic-single\" name=\'game[]\'></select></td><td>Rating: <select class=\"js-example-numbers\" name=\'rating[]\'></select></td></tr>" );
+   $(".js-example-basic-single",$tr).select2({
+  placeholder: "Select a Game",
+  data : gameNumbers
+  });
+  $(".js-example-numbers",$tr).select2({
+  placeholder: "-",
+  data : numberRatings
+  });
+  });
+  
+});
+</script>
+
+</head>
+<title>A Game Recommendation</title>
+<!-- <link rel=stylesheet type=text/css href='{{ url_for('static',filename='style.css')}}'> -->
+<!-- <link rel=stylesheet type=text/css href='{{ url_for('static',filename='style.css')}}'> -->
+<div class=container>
+
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/static/landing.html">Game Time</a>
+          </div>
+          
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li><a href="/static/about.html">About</a></li>
+              <li class="active" ><a href="/user">Game Recommendations</a></li>
+              <li><a href="/game">Game Prediction</a></li>
+            </ul>
+</nav>
+  <h1>Game Time!</h1>
+  <div class=metanav>
+
+    <h4>
+	Please select and rate at least three games or enter a BoardGameGeek username in the box below. You could also just hit enter and you'll get a recommendations from random set of five games. Please be patient, it could take up to a minute for some extreme users.
+    </h4>
+
+    <form id='userinfoform' method='post' action='user' >
+    
+    <table style="width:100%" id = "table">
+    <tbody>
+      <tr><td class="col-md-9 col-md-push-6"> Game: <select class="js-example-basic-single" name='game[]'></select></td><td class="col-md-2 col-md-push-3">Rating: <select class="js-example-numbers" name='rating[]'></select></td></tr>
+      <tr><td class="col-md-9 col-md-push-6"> Game: <select class="js-example-basic-single" name='game[]'></select></td><td class="col-md-2 col-md-push-3">Rating: <select class="js-example-numbers" name='rating[]'></select></td></tr>
+      <tr><td class="col-md-9 col-md-push-6"> Game: <select class="js-example-basic-single" name='game[]'></select></td><td class="col-md-2 col-md-push-3">Rating: <select class="js-example-numbers" name='rating[]'></select></td></tr>
+      <tr><td class="col-md-9 col-md-push-6"> Game: <select class="js-example-basic-single" name='game[]'></select></td><td class="col-md-2 col-md-push-3">Rating: <select class="js-example-numbers" name='rating[]'></select></td></tr>
+      <tr><td class="col-md-9 col-md-push-6"> Game: <select class="js-example-basic-single" name='game[]'></select></td><td class="col-md-2 col-md-push-3">Rating: <select class="js-example-numbers" name='rating[]'></select></td></tr>
+       <tr><td class="col-md-9 col-md-push-6"> Game: <select class="js-example-basic-single" name='game[]'></select></td><td class="col-md-2 col-md-push-3">Rating: <select class="js-example-numbers" name='rating[]'></select></td></tr>
+       <tr><td class="col-md-9 col-md-push-6"> Game: <select class="js-example-basic-single" name='game[]'></select></td><td class="col-md-2 col-md-push-3">Rating: <select class="js-example-numbers" name='rating[]'></select></td></tr>
+       <tr><td class="col-md-9 col-md-push-6"> Game: <select class="js-example-basic-single" name='game[]'></select></td><td class="col-md-2 col-md-push-3">Rating: <select class="js-example-numbers" name='rating[]'></select></td></tr>
+    <tr><td class="col-md-9 col-md-push-6"> Game: <select class="js-example-basic-single" name='game[]'></select></td><td class="col-md-2 col-md-push-3">Rating: <select class="js-example-numbers" name='rating[]'></select></td></tr>
+      </tbody>
+      </table>
+	<input id="rowButton" type="button" value="Add Rows" />
+	  
+     <p> Or enter a username: <input name="username"></input></p>
+     Optional: What method would you like to use: <select class="js-example-methods" name="method"></select>
+      <p>
+    <input type='submit' value='Submit' />
+      </p>
+      
+      
+      
+    </form>
+
+  </div>
+  <div>
+
+
+  </div>
+</div>
+</html>
