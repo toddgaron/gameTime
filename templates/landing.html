@@ -5,7 +5,7 @@
 
 <style>
 .back {
-     background: url('1200px-A_Game_Of_Thrones_board_game_detail.jpg') no-repeat;
+     background: url('{{ url_for('static' , filename='background.jpg')}}') no-repeat;
 }
 
 .jumbo{
@@ -33,14 +33,14 @@ color : white
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand active" href="landing.html" >Game Time</a>
+            <a class="navbar-brand active" href="/" >Game Time</a>
           </div>
           
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li><a href="about.html">About</a></li>
-              <li><a href="../user">Game Recommendations</a></li>
-              <li><a href="../game">Game Prediction</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/user">Game Recommendations</a></li>
+              <li><a href="/game">Game Prediction</a></li>
             </ul>
 </nav>
 
@@ -62,12 +62,12 @@ color : white
         <div class="col-md-4">
           <h2>Game Recommendations</h2>
           <p>Discover games you might like</p>
-          <p><a class="btn btn-secondary" href="../index" role="button">Recommend&raquo;</a></p>
+          <p><a class="btn btn-secondary" href="/user" role="button">Recommend&raquo;</a></p>
        </div>
         <div class="col-md-4">
           <h2>Game Prediction</h2>
           <p>Create new games and discover who might want them (in progress)</p>
-          <p><a class="btn btn-secondary" href="../game" role="button">Discover &raquo;</a></p>
+          <p><a class="btn btn-secondary" href="/game" role="button">Discover &raquo;</a></p>
         </div>
       </div>
 

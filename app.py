@@ -121,7 +121,11 @@ app.model=lode(open('gamescoremodel','rb'))
 
 @app.route('/')
 def main():
-  return redirect('/static/landing.html')
+	return render_template('landing.html')
+
+@app.route('/about')
+def about():
+	return render_template('about.html')
 
 @app.route('/user',methods=['GET','POST']) 
 def user():
@@ -374,14 +378,15 @@ def returnOwnership(item):
     return ownership #max([ownership,wanting]) 
 
 @app.errorhandler(404)
-def error():
+def error(e):
 	return render_template('error.html',message='Something\'s wrong.')
 	
 @app.errorhandler(500)
-def error():
+def error(e):
 	return render_template('error.html',message='Something\'s wrong.')
 
 if __name__ == '__main__':
 	app.debug = False
 #	app.run(port=33507)
 	app.run(port=33511)
+#	app.run(host='0.0.0.0')

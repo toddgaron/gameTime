@@ -65,14 +65,14 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/static/landing.html">Game Time</a>
+            <a class="navbar-brand" href="/">Game Time</a>
           </div>
           
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="/static/about.html">About</a></li>
-              <li><a href="../user">Game Recommendations</a></li>
-              <li><a href="../game">Game Prediction</a></li>
+              <li class="active"><a href="/about">About</a></li>
+              <li><a href="/user">Game Recommendations</a></li>
+              <li><a href="/game">Game Prediction</a></li>
             </ul>
 </nav>
   <h1>Diving into Board Games</h1>
@@ -343,7 +343,7 @@ var third = new pym.Parent("pym3", 'http://public.lightning-viz.org/visualizatio
 </script>
 
 <h3>Wargames</h3>
-<div  class="row text-centered"><div class = "col-md-6"><img src='wargameDistribution.png'></img></div>
+<div  class="row text-centered"><div class = "col-md-6"><img src='{{ url_for('static',filename='wargameDistribution.png')}}'></img></div>
 <div class = "col-md-6">
 <h4>
 <p>Wargames are an interesting encompassing both series miniature games like Warhammer 40k and tactical simulations like Advanced Squad Leader. The distribution of games that are either tagged as wargames or have a war theme is peaked to the right of games tagged otherwise. We might conclude that wargames are just on average better than other sorts of games, but a more likely explanation is that the subset of users that like wargames really like wargames.
