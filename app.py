@@ -9,6 +9,7 @@ from dill import load as lode
 import networkx as nx
 from json import dumps
 from networkx.readwrite import json_graph
+from sklearn.preprocessing import StandardScaler
 #from pandas import read_csv
 #from bs4 import UnicodeDammit
 
@@ -62,11 +63,7 @@ def category_and_mechanic_table(games):
             else:
                 gameData.append(0)
         outData.append(gameData)
-    cNorm=[]
-    for i in outData:
-        j=1./sqrt(float(dot(i,i)))
-        cNorm.append(map(lambda x: j*x,i))
-    return categories, mechanics, cNorm
+    return categories, mechanics, outData
 
 def GameTree(row):
     d={}
@@ -74,14 +71,15 @@ def GameTree(row):
         if app.gameData[i][15] > 500:
             d[i] = app.gameData[i][1]
     out = {}
-    hypeSims  = [dot(row,i) for i in app.gameNorm]
-    out['A Hypothetical Game']= list(set([(list(hypeSims).index(sorted(hypeSims)[-i]),3) for i in range(1,10)]))[:5]
+    row = app.transformer.transform([row])[0]
+    hypeSims  = [dot(row, i) for i in app.gameNorm]
+    out['A Hypothetical Game']= list(set([(list(hypeSims).index(sorted(hypeSims)[-i]),3) for i in range(5,10)]))[:5]
     for k in [i[0] for i in out['A Hypothetical Game']]:
         rk = list(app.gameRecs[k])
-        out[k] = list(set([(rk.index(sorted(rk)[-i]),2) for i in range(1,10)]))[:5]
+        out[k] = list(set([(rk.index(sorted(rk)[-i]),2) for i in range(5,10)]))[:5]
         for j in [i[0] for i in out[k]]:
             rj = list(app.gameRecs[j])
-            out[j] = list(set([(rj.index(sorted(rj)[-i]),1) for i in range(1,10)]))[:5]
+            out[j] = list(set([(rj.index(sorted(rj)[-i]),1) for i in range(5,10)]))[:5]
     nodes=out.keys()
     for i in out.values():
         nodes+=i
@@ -114,6 +112,15 @@ app.gameData=load('gameData.p')
 app.gamesNames=[[i[0],i[1]] for i in app.gameData]
 app.gameScores = [i[13] for i in app.gameData]
 app.cats, app.mechs, app.gameNorm = category_and_mechanic_table(app.gameData)
+
+app.transformer = StandardScaler().fit(app.gameNorm)
+cNorm=[]
+outData = app.transformer.transform(app.gameNorm)
+for i in app.gameNorm:
+	j=1./sqrt(float(dot(i,i)))
+	cNorm.append(map(lambda x: j*x,i))
+app.gameNorm = cNorm
+
 #app.gamesNames=read_csv('gameList.csv',sep=r';',header=0).as_matrix()
 #print app.gamesNames2[100]
 
@@ -388,5 +395,5 @@ def error(e):
 if __name__ == '__main__':
 	app.debug = False
 #	app.run(port=33507)
-	app.run(port=33511)
+	app.run(port=33509)
 #	app.run(host='0.0.0.0')
