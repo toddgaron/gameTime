@@ -65,6 +65,12 @@ def category_and_mechanic_table(games):
         outData.append(gameData)
     return categories, mechanics, outData
 
+def tanimotoSimilarity(user1,user2): #tanimoto
+    z=dot(user1,user2)
+    a=float(z)/(2-z)
+    if sum(user1)==0 or sum(user2)==0: a = 0
+    return a
+
 def GameTree(row):
     d={}
     for i in range(len(app.gameData)):
@@ -72,14 +78,14 @@ def GameTree(row):
             d[i] = app.gameData[i][1]
     out = {}
     row = app.transformer.transform([row])[0]
-    hypeSims  = [dot(row, i) for i in app.gameNorm]
-    out['A Hypothetical Game']= list(set([(list(hypeSims).index(sorted(hypeSims)[-i]),3) for i in range(5,10)]))[:5]
+    hypeSims  = [tanimotoSimilarity(row, i) for i in app.gameNorm]
+    out['A Hypothetical Game']= list(set([(list(hypeSims).index(sorted(hypeSims)[-i]),3) for i in range(0,6)]))[:5]
     for k in [i[0] for i in out['A Hypothetical Game']]:
         rk = list(app.gameRecs[k])
-        out[k] = list(set([(rk.index(sorted(rk)[-i]),2) for i in range(5,10)]))[:5]
+        out[k] = list(set([(rk.index(sorted(rk)[-i]),2) for i in range(0,6)]))[:5]
         for j in [i[0] for i in out[k]]:
             rj = list(app.gameRecs[j])
-            out[j] = list(set([(rj.index(sorted(rj)[-i]),1) for i in range(5,10)]))[:5]
+            out[j] = list(set([(rj.index(sorted(rj)[-i]),1) for i in range(0,6)]))[:5]
     nodes=out.keys()
     for i in out.values():
         nodes+=i
@@ -395,5 +401,5 @@ def error(e):
 if __name__ == '__main__':
 	app.debug = False
 #	app.run(port=33507)
-	app.run(port=33509)
+	app.run(port=33508)
 #	app.run(host='0.0.0.0')
