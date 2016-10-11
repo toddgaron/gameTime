@@ -18,16 +18,18 @@
 		
 $(document).ready(function() {
 
-  
-    $(".js-example-theme").select2({
+   $(".theme").select2({
   data : themes,
   multiple : true,
   });
+  $("#themes").select2('val', ['15']);
   
-      $(".js-example-mechanic").select2({
+  
+  $(".mechanic").select2({
   data : mechanics,
   multiple : true,
   });
+   $("#mechanic").select2('val', [36]);
   
   
 });
@@ -66,7 +68,11 @@ $(document).ready(function() {
  <div  class="row"><div class = "col-md-6">
  
     <h4>
+    <p>
 	Fill in the properties of your potential game as you want (with at least 2 or 3 themes and mechanics) and get the predicted rating and similar games. 
+	</p>
+	<p>
+	The default describe a simple wild west themed dice game.
     </h4>
 
     <form id='gameform' method='post' action='game' >
@@ -74,31 +80,31 @@ $(document).ready(function() {
 
      <div class ="row">
      	<div class="col-md-7">
-     Minimum Number of Players </div> <div class="col-md-4"> <input name="minplayers" placeholder='2'> </input> </div>
+     Minimum Number of Players </div> <div class="col-md-4"> <input name="minplayers" value="4"> </input> </div>
      </div>
       <div class ="row">
      	<div class="col-md-7">
-     Maximum Number of Players </div> <div class="col-md-4"> <input name="maxplayers" placeholder='4'> </input> </div>
+     Maximum Number of Players </div> <div class="col-md-4"> <input name="maxplayers" value='6'> </input> </div>
      </div>
       <div class ="row">
      	<div class="col-md-7">
-     Average Playtime (hours) </div> <div class="col-md-4"> <input name="avgplaytime" placeholder='2'> </input> </div>
+     Average Playtime (hours) </div> <div class="col-md-4"> <input name="avgplaytime" value='0.25'> </input> </div>
      </div>
        <div class ="row">
      	<div class="col-md-7">
-     Language/Game Complexity (1-5 easy to complex) </div> <div class="col-md-4"> <input name="langcomplexity" placeholder='1'> </input> </div>
+     Language/Game Complexity (1-5 easy to complex) </div> <div class="col-md-4"> <input name="langcomplexity" value='1.5'> </input> </div>
      </div>
        <div class ="row">
      	<div class="col-md-7">
-     Recommended Player Age (4-16 child to adult) </div> <div class="col-md-4"> <input name="playerage" placeholder='8'> </input> </div>
+     Recommended Player Age (4-16 child to adult) </div> <div class="col-md-4"> <input name="playerage" value='6'> </input> </div>
      </div>
        <div class ="row">
      	<div class="col-md-7">
-     Game Theme </div> <div class="col-md-5"> <select class="js-example-theme" name="theme"> </select> </div>
+     Game Theme </div> <div class="col-md-5"> <select class="theme" id="themes" name="theme" ></select>  </div>
      </div>
        <div class ="row">
      	<div class="col-md-7">
-     Game Mechanics </div> <div class="col-md-5"> <select class="js-example-mechanic" name="mechanics"> </select></div>
+     Game Mechanics </div> <div class="col-md-5"> <select class="mechanic" id="mechanic" name="mechanics"> </select></div>
      </div>
 
       <p>
