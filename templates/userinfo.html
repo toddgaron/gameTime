@@ -32,17 +32,18 @@ $(document).ready(function() {
   width: '50%',
   });
   
-  $("#rowButton").click(function(){
-   $tr=$("tbody").append( "<tr><td> Game: <select class=\"js-example-basic-single\" name=\'game[]\'></select></td><td>Rating: <select class=\"js-example-numbers\" name=\'rating[]\'></select></td></tr><tr><td> Game: <select class=\"js-example-basic-single\" name=\'game[]\'></select></td><td>Rating: <select class=\"js-example-numbers\" name=\'rating[]\'></select></td></tr><tr><td> Game: <select class=\"js-example-basic-single\" name=\'game[]\'></select></td><td>Rating: <select class=\"js-example-numbers\" name=\'rating[]\'></select></td></tr>" );
-   $(".js-example-basic-single",$tr).select2({
-  placeholder: "Select a Game",
-  data : gameNumbers
-  });
-  $(".js-example-numbers",$tr).select2({
-  placeholder: "-",
-  data : numberRatings
-  });
-  });
+  $("#game0").select2('val',[8]);
+  $("#game1").select2('val',[599]);
+  $("#game2").select2('val',[419]);
+  $("#game3").select2('val',[579]);
+  $("#game4").select2('val',[650]);
+  
+  $("#rating0").select2('val',[6]);
+  $("#rating1").select2('val',[7]);
+  $("#rating2").select2('val',[9]);
+  $("#rating3").select2('val',[8]);
+  $("#rating4").select2('val',[7]);
+  
   
 });
 </script>
@@ -83,18 +84,17 @@ $(document).ready(function() {
     
     <table style="width:100%" id = "table">
     <tbody>
-      <tr><td class="col-md-9 col-md-push-6"> Game: <select class="js-example-basic-single" name='game[]'></select></td><td class="col-md-2 col-md-push-3">Rating: <select class="js-example-numbers" name='rating[]'></select></td></tr>
-      <tr><td class="col-md-9 col-md-push-6"> Game: <select class="js-example-basic-single" name='game[]'></select></td><td class="col-md-2 col-md-push-3">Rating: <select class="js-example-numbers" name='rating[]'></select></td></tr>
-      <tr><td class="col-md-9 col-md-push-6"> Game: <select class="js-example-basic-single" name='game[]'></select></td><td class="col-md-2 col-md-push-3">Rating: <select class="js-example-numbers" name='rating[]'></select></td></tr>
-      <tr><td class="col-md-9 col-md-push-6"> Game: <select class="js-example-basic-single" name='game[]'></select></td><td class="col-md-2 col-md-push-3">Rating: <select class="js-example-numbers" name='rating[]'></select></td></tr>
-      <tr><td class="col-md-9 col-md-push-6"> Game: <select class="js-example-basic-single" name='game[]'></select></td><td class="col-md-2 col-md-push-3">Rating: <select class="js-example-numbers" name='rating[]'></select></td></tr>
+      <tr><td class="col-md-9 col-md-push-6"> Game: <select class="js-example-basic-single" id=game0 name='game[]'></select></td><td class="col-md-2 col-md-push-3">Rating: <select class="js-example-numbers" name='rating[]' id="rating0"'></select></td></tr>
+      <tr><td class="col-md-9 col-md-push-6"> Game: <select class="js-example-basic-single" id=game1 name='game[]'></select></td><td class="col-md-2 col-md-push-3">Rating: <select class="js-example-numbers" id="rating1" name='rating[]'></select></td></tr>
+      <tr><td class="col-md-9 col-md-push-6"> Game: <select class="js-example-basic-single" id=game2 name='game[]'></select></td><td class="col-md-2 col-md-push-3">Rating: <select class="js-example-numbers" id="rating2" name='rating[]'></select></td></tr>
+      <tr><td class="col-md-9 col-md-push-6"> Game: <select class="js-example-basic-single" id=game3 name='game[]'></select></td><td class="col-md-2 col-md-push-3">Rating: <select class="js-example-numbers" name='rating[]' id="rating3"></select></td></tr>
+      <tr><td class="col-md-9 col-md-push-6"> Game: <select class="js-example-basic-single" id=game4 name='game[]'></select></td><td class="col-md-2 col-md-push-3">Rating: <select class="js-example-numbers" name='rating[]' id="rating4"></select></td></tr>
        <tr><td class="col-md-9 col-md-push-6"> Game: <select class="js-example-basic-single" name='game[]'></select></td><td class="col-md-2 col-md-push-3">Rating: <select class="js-example-numbers" name='rating[]'></select></td></tr>
        <tr><td class="col-md-9 col-md-push-6"> Game: <select class="js-example-basic-single" name='game[]'></select></td><td class="col-md-2 col-md-push-3">Rating: <select class="js-example-numbers" name='rating[]'></select></td></tr>
        <tr><td class="col-md-9 col-md-push-6"> Game: <select class="js-example-basic-single" name='game[]'></select></td><td class="col-md-2 col-md-push-3">Rating: <select class="js-example-numbers" name='rating[]'></select></td></tr>
     <tr><td class="col-md-9 col-md-push-6"> Game: <select class="js-example-basic-single" name='game[]'></select></td><td class="col-md-2 col-md-push-3">Rating: <select class="js-example-numbers" name='rating[]'></select></td></tr>
       </tbody>
       </table>
-	<input id="rowButton" type="button" value="Add Rows" />
 	  
      <p> Or enter a username: <input name="username"></input></p>
      Optional: What method would you like to use: <select class="js-example-methods" name="method"></select>
