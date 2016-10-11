@@ -278,7 +278,7 @@ def copacetic(owner,rating,game):
 		new = owner
 	else:
 		#this mixing seems to give a reasonably large number of games in the top 10.
-		new = (0.5*array(owner/max(owner)))+(0.25*array(rating/max(rating)))+(0.25*array(game/max(game)))
+		new = (0.3*array(owner/max(owner)))+(0.5*array(rating/max(rating)))+(0.3*array(game/max(game)))
 		print max(new)
 	if app.vars['games']!=[]:
 		print 'copacetic', app.vars['games'],new[:10]
