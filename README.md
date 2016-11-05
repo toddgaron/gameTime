@@ -2,10 +2,10 @@
 
 A simple game recommendation engine using data scraped from BoardGameGeek. Given ratings for a few games or a username, it will return ten games rated by their similarity to your ratings.
 
-Currently, the ratings has a bias towards wargames. This skewing will be removed in future iterations.
+Currently, the ratings have a bias towards wargames. This skewing will be removed in future iterations.
 
 ## Features to come:
-- Removing bias towards wargames
+- Removing the bias towards wargames
 - Use a machine learning approach to figure out a user's true rating of a game
 - Expand the number of games in the dataset
 - Tune the algorithm to increase perceptivity
