@@ -18,6 +18,7 @@ I would also like to build a database of board game manuals, and use a deep lear
 - gameData.p is a pickle of game properties and descriptions.
 - aMatrixHalfFloat and aMatrixMaskedHalfFloat are two pickled matrices of essentially sums of the cosine similarities of roughly half a million users stored as half precision floats.
 - gamegameHalfFloat is a pickled matrix of the Tanimoto similarities of normalized game properties.
+- itemitemHalfFloat is a pickled matrix of the Tanimoto similarities of game ratings from users.
 - gamescoremodel is a pickled random forest related game properties to their BoardGameGeek score.
 - static is a folder of static assets.
 - templates is a folder of templates for pages. 
