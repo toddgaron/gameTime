@@ -18,9 +18,9 @@ app = Flask(__name__)
 app.vars={}
 
 class catMechTransformer():
-	'''
-	A transformer that takes information about a game and returns a vector with the properties one-hot encoded.
-	'''
+    '''
+    A transformer that takes information about a game and returns a vector with the properties one-hot encoded.
+    '''
     def __init__(self):
         self.cats=83
         self.mechs=51
@@ -41,9 +41,9 @@ class catMechTransformer():
         return [self.flatten(i) for i in X]
 
 def category_and_mechanic_table(games):
-	'''
-	Makes a table of game properties, mostly redundant with what catMechTransformer does.
-	'''
+    '''
+    Makes a table of game properties, mostly redundant with what catMechTransformer does.
+    '''
     categories = mechanics = set([])
     for game in games:
         [categories.add(i) for i in game[10]]
@@ -76,9 +76,9 @@ def tanimotoSimilarity(user1,user2):
     return a
 
 def GameTree(row):
-	'''
-	builds a graph of the most similar games to a given hypothetical game (row)
-	'''
+    '''
+    builds a graph of the most similar games to a given hypothetical game (row)
+    '''
     d = {} #a dictionary of BoardGameGeek game id and position in app.gameData
     for i in range(len(app.gameData)):
         if app.gameData[i][15] > 500:
@@ -115,17 +115,20 @@ def GameTree(row):
 
 # loading in resources. I know pickles and .npy files are unsafe, but for testing the performance gains were worth it. gameList is a list of games, their BoardGamegGek id number, and name. a Matrix is a precomputed similarity matrix of user recommendations such that we can dot our vector of game ratings into it to get a user-user similarity. aMatrixMasked is set up to allow us to quickly sum the similarities. It's the previous matrix with the nonzero entries set to one. It will allow us to quickly sum the similarities in user-user. This user-user uses cosine similarity.
 #app.gamesNames=[[i[0],i[1]] for i in read_csv("gameList.csv", quotechar='"', skipinitialspace=True).as_matrix()]
-app.recs = load('aMatrixHalfFloat.npy')
-app.recsMasked = load('aMatrixMaskedHalfFloat.npy')
+#app.recs = load('aMatrixHalfFloat.npy')
+#app.recsMasked = load('aMatrixMaskedHalfFloat.npy')
 
 # itemitem is a similarity between the columns of a using Tanimoto similarity
-app.itemRecs = load('itemitemHalfFloat.npy')
+#app.itemRecs = load('itemitemHalfFloat.npy')
 
 # itemitem is a similarity between the rows of a matrix of game information using Tanimoto similarity. it's slightly weighted towards game ownership and comments on the game.
 app.gameRecs = load('gamegameHalfFloat.npy')
 app.gameData = load('gameData.p')
+
 app.gamesNames = [[i[0], i[1]] for i in app.gameData]
 app.gameScores = [i[13] for i in app.gameData]
+
+app.gameFactors = load('gameFactors.npy')
 
 app.cats, app.mechs, app.gameNorm = category_and_mechanic_table(app.gameData)
 
@@ -138,7 +141,7 @@ for i in app.gameNorm:
 app.gameNorm = cNorm
 del cNorm
 
-app.model = lode(open('gamescoremodel','rb'))
+#app.model = lode(open('gamescoremodel','rb'))
 
 @app.route('/')
 def main():
@@ -243,17 +246,22 @@ def main_entered():
 	owner_suggestions = rating_suggestions = game_suggestions = []
 	
 	for i in range(len(app.vars['games'])):
-		game_row[int(app.vars['games'][i])] = 1
+		#game_row[int(app.vars['games'][i])] = 1
 		rating_row[int(app.vars['games'][i])] = float(app.vars['ratings'][i])
 
-	owner_suggestions = ownership_recs(rating_row, app.itemRecs)
-	rating_suggestions = getRecs(rating_row)
-	game_suggestions = ownership_recs(rating_row,app.gameRecs)
+	#owner_suggestions = ownership_recs(rating_row, app.itemRecs)
+	#ating_suggestions = getRecs(rating_row)
+	#game_suggestions = ownership_recs(rating_row,app.gameRecs)
+	
+	rating_suggestions = dot(dot(app.gameFactors, rating_row).T, app.gameFactors)
+	rating_suggestions = array([4 if x > 4 else x for x in rating_suggestions])
+	rating_suggestions = array(app.gameScores) + rating_suggestions
+	print rating_suggestions
 	
 	#a function that takes the output and mixes it together, removing the initial games as well.
-	ratings,keys = copacetic(owner_suggestions,rating_suggestions,game_suggestions)
+	ratings, keys = copacetic(rating_suggestions)
 	
-	inProps,outProps = properties(keys)
+	inProps, outProps = properties(keys)
 
 	return render_template('results2.html', sim=[i[0] for i in ratings], games=[i[2].replace('\,',',') for i in ratings], nums=[int(i[1]) for i in ratings], inprops=inProps, outprops = outProps, game_text = [i[3].replace('\,',',').replace('\n\n','</p><p>') for i in ratings])#inProps,outprops=outProps)
 
@@ -277,20 +285,20 @@ def properties(keys):
 	print [mostCommon(inpropsCat), mostCommon(inpropsMech)],[mostCommon(outpropsCat), mostCommon(outpropsMech)]
 	return [mostCommon(inpropsCat), mostCommon(inpropsMech)],[mostCommon(outpropsCat), mostCommon(outpropsMech)]
 
-def copacetic(owner, rating, game):
+def copacetic(ratings):
 	#this mixing seems to give a reasonably large number of games in the top 10.
-	new = (0.3 * array(owner/max(owner))) + (0.5 * array(rating/max(rating))) + (0.3 * array(game/max(game)))
+	new = ratings
 	print max(new)
-if app.vars['games']!=[]:
-	print 'copacetic', app.vars['games'], new[:10]
+	if app.vars['games']!=[]:
+		print 'copacetic', app.vars['games'], new[:10]
 	for i in app.vars['games']:
 		new[i] = 0
 	#normalize the entries
 	new = new/max(new)
-	newkeys = sorted(range(len(new)), key = lambda x: new[x])[-50:] #50 largest simularities
+	newkeys = argsort(new)[-50:][::-1] #50 largest simularities
 	names, a = [], []
 	#removes some versions of the same game from the results
-	newkeys.reverse()
+	#newkeys.reverse()
 	newnewkeys = []
 	for key in newkeys:
 		if (app.gamesNames[key][1].split(':'))[0] not in names:
