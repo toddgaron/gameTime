@@ -214,17 +214,19 @@ function connectedNodes() {
 <h4> Click for descriptions of the most similar games </h4>
 <h5>
 <ol>
-<li> <div class="accordion" id="accordion2">
+
+{% for i in range(5) %}
+<li> <div class="accordion" id="accordion{{i}}">
   
    <div class="accordion-group">
     <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne" >
-		{{games[0]}}
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion{{i}}" href="#collapse{{i}}" >
+		{{games[i]}}
       </a>
     </div>
-    <div id="collapseOne" class="accordion-body collapse">
+    <div id="collapse{{i}}" class="accordion-body collapse">
     
-       <h5> <p>{{game_text[0]| safe}}</p> <p> <a href="https://www.boardgamegeek.com/boardgame/{{nums[0]}}" target="_blank">More information on BoardgameGeek</a></h5>
+       <h5> <p>{{game_text[i]| safe}}</p> <p> <a href="https://www.boardgamegeek.com/boardgame/{{nums[i]}}" target="_blank">More information on BoardgameGeek</a></h5>
       </div>
     
     <!-- <button class="SeeMore2" data-toggle="collapse" href="#collapseTwo">See More</button> -->
@@ -232,74 +234,8 @@ function connectedNodes() {
 
 </div>
 
-<li> <div class="accordion" id="accordion2">
-  
-   <div class="accordion-group">
-    <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo" >
-		{{games[1]}}
-      </a>
-    </div>
-    <div id="collapseTwo" class="accordion-body collapse">
-    
-       <h5> <p>{{game_text[1]| safe}}</p> <p> <a href="https://www.boardgamegeek.com/boardgame/{{nums[1]}}" target="_blank">More information on BoardgameGeek</a></h5>
-      </div>
-    
-    <!-- <button class="SeeMore2" data-toggle="collapse" href="#collapseTwo">See More</button> -->
-  </div>
+{% endfor %}
 
-</div>
-<li> <div class="accordion" id="accordion2">
-  
-   <div class="accordion-group">
-    <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree" >
-		{{games[2]}}
-      </a>
-    </div>
-    <div id="collapseThree" class="accordion-body collapse">
-    
-       <h5> <p>{{game_text[2]| safe}}</p> <p> <a href="https://www.boardgamegeek.com/boardgame/{{nums[2]}}" target="_blank">More information on BoardgameGeek</a></h5>
-      </div>
-    
-    <!-- <button class="SeeMore2" data-toggle="collapse" href="#collapseTwo">See More</button> -->
-  </div>
-
-</div>
-<li> <div class="accordion" id="accordion2">
-  
-   <div class="accordion-group">
-    <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour" >
-		{{games[3]}}
-      </a>
-    </div>
-    <div id="collapseFour" class="accordion-body collapse">
-    
-       <h5> <p>{{game_text[3]| safe}}</p> <p> <a href="https://www.boardgamegeek.com/boardgame/{{nums[3]}}" target="_blank">More information on BoardgameGeek</a></h5>
-      </div>
-    
-    <!-- <button class="SeeMore2" data-toggle="collapse" href="#collapseTwo">See More</button> -->
-  </div>
-
-</div>
-<li> <div class="accordion" id="accordion2">
-  
-   <div class="accordion-group">
-    <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFive" >
-		{{games[4]}}
-      </a>
-    </div>
-    <div id="collapseFive" class="accordion-body collapse">
-    
-       <h5> <p>{{game_text[4]| safe}}</p> <p> <a href="https://www.boardgamegeek.com/boardgame/{{nums[4]}}" target="_blank">More information on BoardgameGeek</a></h5>
-      </div>
-    
-    <!-- <button class="SeeMore2" data-toggle="collapse" href="#collapseTwo">See More</button> -->
-  </div>
-
-</div>
 </ol>
 </h5></div>
 

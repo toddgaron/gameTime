@@ -57,177 +57,30 @@ $(document).ready(function() {
     <th class="col-md-2 col-md-push-3">Similarity</th>
   </tr>
     <tbody>
-  <tr><td class="col-md-1 col-md-push-1">1</td><td class="col-md-9 col-md-push-6"><div class="accordion" id="accordion2">
+    
+    
+    {% for i in range(10) %}
+  <tr><td class="col-md-1 col-md-push-1">{{i+1}}</td><td class="col-md-9 col-md-push-6"><div class="accordion" id="accordion{{i}}">
   
    <div class="accordion-group">
     <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseZero" >
-		{{games[0]}}
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion{{i}}" href="#collapse{{i}}" >
+		{{games[i]}}
       </a>
     </div>
-    <div id="collapseZero" class="accordion-body collapse">
+    <div id="collapse{{i}}" class="accordion-body collapse">
     
-       <h5> <p>{{game_text[0]| safe}}</p> <p> <a href="https://www.boardgamegeek.com/boardgame/{{nums[0]}}" target="_blank">More information on BoardgameGeek</a></h5>
+       <h5> <p>{{game_text[i]| safe}}</p> <p> <a href="https://www.boardgamegeek.com/boardgame/{{nums[i]}}" target="_blank">More information on BoardgameGeek</a></h5>
       </div>
     
     <!-- <button class="SeeMore2" data-toggle="collapse" href="#collapseTwo">See More</button> -->
   </div>
 
-</div></td> <td class="col-md-2 col-md-push-3">{{sim[0]}}</td></tr>
+</div></td> <td class="col-md-2 col-md-push-3">{{sim[i]}}</td></tr>
 
-  <tr><td class="col-md-1 col-md-push-1">2</td><td class="col-md-9 col-md-push-6"><div class="accordion" id="accordion2">
+{% endfor %}
+
   
-   <div class="accordion-group">
-    <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne" >
-		{{games[1]}}
-      </a>
-    </div>
-    <div id="collapseOne" class="accordion-body collapse">
-    
-       <h5> <p>{{game_text[1]| safe}}</p> <p> <a href="https://www.boardgamegeek.com/boardgame/{{nums[1]}}" target="_blank">More information on BoardgameGeek</a></h5>
-      </div>
-    
-    <!-- <button class="SeeMore2" data-toggle="collapse" href="#collapseTwo">See More</button> -->
-  </div>
-
-</div></td><td class="col-md-2 col-md-push-3">{{sim[1]}}</td></tr>
-  <tr><td class="col-md-1 col-md-push-1">3</td><td class="col-md-9 col-md-push-6"><div class="accordion" id="accordion2">
-  
-   <div class="accordion-group">
-    <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree" >
-		{{games[2]}}
-      </a>
-    </div>
-    <div id="collapseThree" class="accordion-body collapse">
-    
-       <h5> <p>{{game_text[2]| safe}}</p> <p> <a href="https://www.boardgamegeek.com/boardgame/{{nums[2]}}" target="_blank">More information on BoardgameGeek</a></h5>
-      </div>
-    
-    <!-- <button class="SeeMore2" data-toggle="collapse" href="#collapseTwo">See More</button> -->
-  </div>
-
-</div></td><td class="col-md-2 col-md-push-3">{{sim[2]}}</td></tr>
-  <tr><td class="col-md-1 col-md-push-1">4</td><td class="col-md-9 col-md-push-6"><div class="accordion" id="accordion2">
-  
-   <div class="accordion-group">
-    <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour" >
-		{{games[3]}}
-      </a>
-    </div>
-    <div id="collapseFour" class="accordion-body collapse">
-    
-       <h5> <p>{{game_text[3]| safe}}</p> <p> <a href="https://www.boardgamegeek.com/boardgame/{{nums[3]}}" target="_blank">More information on BoardgameGeek</a></h5>
-      </div>
-    
-    <!-- <button class="SeeMore2" data-toggle="collapse" href="#collapseTwo">See More</button> -->
-  </div>
-
-</div></td><td class="col-md-2 col-md-push-3">{{sim[3]}}</td></tr>
-  <tr><td class="col-md-1 col-md-push-1">5</td><td class="col-md-9 col-md-push-6"><div class="accordion" id="accordion2">
-  
-   <div class="accordion-group">
-    <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFive" >
-		{{games[4]}}
-      </a>
-    </div>
-    <div id="collapseFive" class="accordion-body collapse">
-    
-       <h5> <p>{{game_text[4]| safe}}</p> <p> <a href="https://www.boardgamegeek.com/boardgame/{{nums[4]}}" target="_blank">More information on BoardgameGeek</a></h5>
-      </div>
-    
-    <!-- <button class="SeeMore2" data-toggle="collapse" href="#collapseTwo">See More</button> -->
-  </div>
-
-</div></td><td class="col-md-2 col-md-push-3">{{sim[4]}}</td></tr>
-  <tr><td class="col-md-1 col-md-push-1">6</td><td class="col-md-9 col-md-push-6"><div class="accordion" id="accordion2">
-  
-   <div class="accordion-group">
-    <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseSix" >
-		{{games[5]}}
-      </a>
-    </div>
-    <div id="collapseSix" class="accordion-body collapse">
-    
-       <h5> <p>{{game_text[5]| safe}}</p> <p> <a href="https://www.boardgamegeek.com/boardgame/{{nums[5]}}" target="_blank">More information on BoardgameGeek</a></h5>
-      </div>
-    
-    <!-- <button class="SeeMore2" data-toggle="collapse" href="#collapseTwo">See More</button> -->
-  </div>
-
-</div></td><td class="col-md-2 col-md-push-3">{{sim[5]}}</td></tr>
-  <tr><td class="col-md-1 col-md-push-1">7</td><td class="col-md-9 col-md-push-6"><div class="accordion" id="accordion2">
-  
-   <div class="accordion-group">
-    <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseSeven" >
-		{{games[6]}}
-      </a>
-    </div>
-    <div id="collapseSeven" class="accordion-body collapse">
-    
-       <h5> <p>{{game_text[6]| safe}}</p> <p> <a href="https://www.boardgamegeek.com/boardgame/{{nums[6]}}" target="_blank">More information on BoardgameGeek</a></h5>
-      </div>
-    
-    <!-- <button class="SeeMore2" data-toggle="collapse" href="#collapseTwo">See More</button> -->
-  </div>
-
-</div></td><td class="col-md-2 col-md-push-3">{{sim[6]}}</td></tr>
-  <tr><td class="col-md-1 col-md-push-1">8</td><td class="col-md-9 col-md-push-6"><div class="accordion" id="accordion2">
-  
-   <div class="accordion-group">
-    <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseEight" >
-		{{games[7]}}
-      </a>
-    </div>
-    <div id="collapseEight" class="accordion-body collapse">
-    
-       <h5> <p>{{game_text[7]| safe}}</p> <p> <a href="https://www.boardgamegeek.com/boardgame/{{nums[7]}}" target="_blank">More information on BoardgameGeek</a></h5>
-      </div>
-    
-    <!-- <button class="SeeMore2" data-toggle="collapse" href="#collapseTwo">See More</button> -->
-  </div>
-
-</div></td><td class="col-md-2 col-md-push-3">{{sim[7]}}</td></tr>
-  <tr><td class="col-md-1 col-md-push-1">9</td><td class="col-md-9 col-md-push-6"><div class="accordion" id="accordion2">
-  
-   <div class="accordion-group">
-    <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseNine" >
-		{{games[8]}}
-      </a>
-    </div>
-    <div id="collapseNine" class="accordion-body collapse">
-    
-       <h5> <p>{{game_text[8]| safe}}</p> <p> <a href="https://www.boardgamegeek.com/boardgame/{{nums[8]}}" target="_blank">More information on BoardgameGeek</a></h5>
-      </div>
-    
-    <!-- <button class="SeeMore2" data-toggle="collapse" href="#collapseTwo">See More</button> -->
-  </div>
-
-</div></td><td class="col-md-2 col-md-push-3">{{sim[8]}}</td></tr>
-  <tr><td class="col-md-1 col-md-push-1">10</td><td class="col-md-9 col-md-push-6"><div class="accordion" id="accordion2">
-  
-   <div class="accordion-group">
-    <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTen" >
-		{{games[9]}}
-      </a>
-    </div>
-    <div id="collapseTen" class="accordion-body collapse">
-    
-       <h5> <p>{{game_text[9]| safe}}</p> <p> <a href="https://www.boardgamegeek.com/boardgame/{{nums[9]}}" target="_blank">More information on BoardgameGeek</a></h5>
-      </div>
-    
-    <!-- <button class="SeeMore2" data-toggle="collapse" href="#collapseTwo">See More</button> -->
-  </div>
-
-</div></td><td class="col-md-2 col-md-push-3">{{sim[9]}}</td></tr>
   </tbody>
   </table>
   <h4>
