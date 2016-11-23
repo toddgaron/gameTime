@@ -72,9 +72,9 @@ def tanimotoSimilarity(user1, user2):
     Calculates the Tanimoto Similarity of two normalized vectors.
     '''
     z = dot(user1, user2)
-    a = float(z)/(2-z)
-    if sum(user1) == 0 or sum(user2) == 0: a = 0
-    return a
+    #a = float(z)/(2-z)
+    if sum(user1) == 0 or sum(user2) == 0: z = 0
+    return z
 
 def GameTree(row):
     '''
