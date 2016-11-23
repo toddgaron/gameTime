@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect
-from numpy import dot,sqrt,load,array,argsort,sum,count_nonzero,any
+from numpy import dot, sqrt,load,array,argsort,sum,count_nonzero,any, log
 #from pandas import read_csv
 from requests import get
 from time import sleep
@@ -254,7 +254,7 @@ def main_entered():
 	#game_suggestions = ownership_recs(rating_row,app.gameRecs)
 	
 	rating_suggestions = dot(dot(app.gameFactors, rating_row).T, app.gameFactors)
-	rating_suggestions = array([4 if x > 4 else x for x in rating_suggestions])
+	rating_suggestions = array([sqrt(2 * x) if x > 0 else 0 for x in rating_suggestions])
 	rating_suggestions = array(app.gameScores) + rating_suggestions
 	print rating_suggestions
 	
