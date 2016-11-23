@@ -49,7 +49,7 @@ def category_and_mechanic_table(games):
         [categories.add(i) for i in game[10]]
         [mechanics.add(i) for i in game[11]]
     categories, mechanics = list(categories), list(mechanics)
-    print len(categories), len(mechanics)
+
     outData=[]
     for game in games:
         gameData = []
@@ -133,7 +133,6 @@ app.gameFactors = load('gameFactors.npy')
 
 app.cats, app.mechs, app.gameNorm = category_and_mechanic_table(app.gameData)
 
-print array(app.gameNorm).shape
 
 app.transformer = StandardScaler().fit(app.gameNorm)
 
@@ -141,7 +140,7 @@ cNorm = []
 outData = app.transformer.transform(app.gameNorm)
 for i in app.gameNorm:
 	j = 1./sqrt(float(dot(i, i)))
-	cNorm.append(map(lambda x: j * x,i))
+	cNorm.append(list(map(lambda x: j * x, i)))
 app.gameNorm = cNorm
 del cNorm
 
@@ -167,12 +166,12 @@ def user():
 		if  request.form['username'] == '':
 			#if there's no username grab all the games, filter them and grab the ratings
 			t = request.form.getlist('game[]', type=float)
-			app.vars['games'] = map(lambda x: int(x), filter(lambda x: x>-1, t))
+			app.vars['games'] = list(map(lambda x: int(x), filter(lambda x: x>-1, t)))
 			r = request.form.getlist('rating[]', type=float)
 			app.vars['ratings'] = [r[i] for i in range(len(app.vars['games'])) if t > -1]
 
 			#some errors
-			if  (len(set(app.vars['games']))<3):
+			if  (len(set(app.vars['games'])) < 3):
 				return render_template('error.html', message='Please rate more games!')
 			elif (count_nonzero(app.vars['ratings']) < 3):
 				return render_template('error.html', message='Please rate more games!')
@@ -195,7 +194,7 @@ def game():
 		return render_template('gameinfo.html')
 	else:
 		try:
-			app.vars['gameParts'] = [float(request.form['minplayers']), float(request.form['maxplayers']), float(request.form['avgplaytime']), float(request.form['langcomplexity']), float(request.form['playerage']), map(int,request.form.getlist('theme')), map(int, request.form.getlist('mechanics'))]
+			app.vars['gameParts'] = [float(request.form['minplayers']), float(request.form['maxplayers']), float(request.form['avgplaytime']), float(request.form['langcomplexity']), float(request.form['playerage']), list(map(int,request.form.getlist('theme'))), list(map(int, request.form.getlist('mechanics')))]
 			
 			score = app.model.predict([app.vars['gameParts']])[0]
 			percentile = 100 * round( float(len([i for i in app.gameScores if i <= score ])) / len(app.gameScores), 4)
@@ -203,7 +202,6 @@ def game():
 			row = catMechTransformer().transform([app.vars['gameParts']])[0]
 			
 			a, b, c = GameTree(row)
-			print a, b, c
 			
 			return render_template('gameresults.html',score = str(score), percentile = str(percentile)+'%', games = c, nums = b, game_text = [app.gameData[i][-1] for i in b], game_json = dumps(json_graph.node_link_data(a))) 
 			
@@ -228,7 +226,6 @@ def main_username():
 	#parse it. I use the xmltodict library, which makes the output look like JSON data.
 	XML = parse(XML)
 	#print XML
-	print XML['items']['@totalitems']
 	try:
 		#some users have data that's slightly misformatted. This catches those entries
 		if int(XML['items']['@totalitems']) < 3:
@@ -263,7 +260,6 @@ def main_entered():
 	rating_suggestions = dot(dot(app.gameFactors, rating_row).T, app.gameFactors)
 	rating_suggestions = array([sqrt(2 * x) if x > 0 else 0 for x in rating_suggestions])
 	rating_suggestions = array(app.gameScores) + rating_suggestions
-	print rating_suggestions
 	
 	#a function that takes the output and mixes it together, removing the initial games as well.
 	ratings, keys = copacetic(rating_suggestions)
@@ -289,15 +285,13 @@ def properties(keys):
 		def capFix(w):
 			return w.lower() if (("War" not in w or w != 'Wargames') and ('Nap' not in w) and ('Ren' not in w) and ('Arab' not in w)) else w
 		return sorted(set(map(capFix, lst)), key = lst.count)[::-1][:3]
-	print [mostCommon(inpropsCat), mostCommon(inpropsMech)],[mostCommon(outpropsCat), mostCommon(outpropsMech)]
+		
 	return [mostCommon(inpropsCat), mostCommon(inpropsMech)],[mostCommon(outpropsCat), mostCommon(outpropsMech)]
 
 def copacetic(ratings):
 	#this mixing seems to give a reasonably large number of games in the top 10.
 	new = ratings
-	print max(new)
-	if app.vars['games']!=[]:
-		print 'copacetic', app.vars['games'], new[:10]
+
 	for i in app.vars['games']:
 		new[i] = 0
 	#normalize the entries
@@ -316,13 +310,13 @@ def copacetic(ratings):
 		
 #calculating the different sorts of recommendations
 
-def ownership_recs(user, recs):
-	totals = dot(user,recs)
-	simssum = dot(map(lambda x: 1 if x > 0 else 0,user),recs)
-	rankings = [app.gameData[i][13] + totals[i]/simssum[i] for i in range(len(totals))]
-	del totals, simssum
-	#print 'item rankings', rankings[:20]
-	return rankings
+# def ownership_recs(user, recs):
+# 	totals = dot(user,recs)
+# 	simssum = dot(map(lambda x: 1 if x > 0 else 0,user),recs)
+# 	rankings = [app.gameData[i][13] + totals[i]/simssum[i] for i in range(len(totals))]
+# 	del totals, simssum
+# 	#print 'item rankings', rankings[:20]
+# 	return rankings
 
 
 #if the rows are normalized cosine similarity reduces to a dot product between the matrix we care about and our vector of ratings. The normalization of the vector will eventually cancel out so we don't have to worry about it
@@ -353,11 +347,10 @@ def toGameAndRating(xml):
 	gameids, ratings ,owned = array(gameids), array(ratings), array(owned)
 	ids = gameids.argsort()
 	gameids, ratings, owned = gameids[ids], ratings[ids], owned[ids]
-	gameids = map(lambda x: intGameList.index(x), gameids)
+	gameids = list(map(lambda x: intGameList.index(x), gameids))
 	app.vars['games'] = gameids
 	app.vars['ratings'] = ratings
-	print gameids
-	print list(ratings)
+
     
 errorMessage=u'<html>\n  <head>\n    <title>Error 503 Service Unavailable</title>\n  </head>\n  <body>\n    <h1>503 Service Unavailable</h1>\n    Our apologies for the temporary inconvenience. The requested URL generated 503 "Service Unavailable" error due to overloading or maintenance of the server.\n   </body>\n</html>\n'
 
