@@ -44,11 +44,12 @@ def category_and_mechanic_table(games):
     '''
     Makes a table of game properties, mostly redundant with what catMechTransformer does.
     '''
-    categories = mechanics = set([])
+    categories, mechanics = set([]), set([])
     for game in games:
         [categories.add(i) for i in game[10]]
         [mechanics.add(i) for i in game[11]]
     categories, mechanics = list(categories), list(mechanics)
+    print len(categories), len(mechanics)
     outData=[]
     for game in games:
         gameData = []
@@ -66,11 +67,11 @@ def category_and_mechanic_table(games):
         outData.append(gameData)
     return categories, mechanics, outData
 
-def tanimotoSimilarity(user1,user2):
+def tanimotoSimilarity(user1, user2):
     '''
     Calculates the Tanimoto Similarity of two normalized vectors.
     '''
-    z = dot(user1,user2)
+    z = dot(user1, user2)
     a = float(z)/(2-z)
     if sum(user1) == 0 or sum(user2) == 0: a = 0
     return a
@@ -79,13 +80,13 @@ def GameTree(row):
     '''
     builds a graph of the most similar games to a given hypothetical game (row)
     '''
-    d = {} #a dictionary of BoardGameGeek game id and position in app.gameData
-    for i in range(len(app.gameData)):
-        if app.gameData[i][15] > 500:
-            d[i] = app.gameData[i][1]
+    
+    #a dictionary of BoardGameGeek game id and position in app.gameData
+    d = {i : app.gameData[i][1] for i in range(len(app.gameData)) if app.gameData[i][15] > 500}
     out = {}
-    row = app.transformer.transform([row])[0]
+    row = app.transformer.transform([row])
     hypeSims  = [tanimotoSimilarity(row, i) for i in app.gameNorm]
+
     out['A Hypothetical Game'] = list(set([(list(hypeSims).index(sorted(hypeSims)[-i]), 3) for i in range(0, 6)]))[:5]
     for k in [i[0] for i in out['A Hypothetical Game']]:
         rk = list(app.gameRecs[k])
@@ -132,7 +133,10 @@ app.gameFactors = load('gameFactors.npy')
 
 app.cats, app.mechs, app.gameNorm = category_and_mechanic_table(app.gameData)
 
+print array(app.gameNorm).shape
+
 app.transformer = StandardScaler().fit(app.gameNorm)
+
 cNorm = []
 outData = app.transformer.transform(app.gameNorm)
 for i in app.gameNorm:
@@ -141,7 +145,7 @@ for i in app.gameNorm:
 app.gameNorm = cNorm
 del cNorm
 
-#app.model = lode(open('gamescoremodel','rb'))
+app.model = lode(open('gamescoremodel','rb'))
 
 @app.route('/')
 def main():
@@ -195,8 +199,11 @@ def game():
 			
 			score = app.model.predict([app.vars['gameParts']])[0]
 			percentile = 100 * round( float(len([i for i in app.gameScores if i <= score ])) / len(app.gameScores), 4)
+			
 			row = catMechTransformer().transform([app.vars['gameParts']])[0]
+			
 			a, b, c = GameTree(row)
+			print a, b, c
 			
 			return render_template('gameresults.html',score = str(score), percentile = str(percentile)+'%', games = c, nums = b, game_text = [app.gameData[i][-1] for i in b], game_json = dumps(json_graph.node_link_data(a))) 
 			
